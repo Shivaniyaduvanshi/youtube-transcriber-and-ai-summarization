@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Google Fonts Link For Icons -->
+    {%load static%}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <script src="{% static 'script.js'%}" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <span class="hamburger-btn material-symbols-rounded">menu</span>
+            <a href="#" class="logo">
+                <img src="{% static 'images/logo.jpg'%}" alt="logo">
+                <h2>Youtube Summary</h2>
+            </a>
+            <ul class="links">
+                <span class="close-btn material-symbols-rounded">close</span>
+                <li><a href="{%url 'home'%}">Home</a></li>
+                <li><a href="{%url 'about'%}">About us</a></li>
+              
+            </ul>
+           
+            {% if request.user.is_authenticated%}
+            <button onclick="logout()" class="login-btn">Log-out</button>
+            {% endif %}
+            
+        </nav>
+    </header>
+
+    
+        <div class="video-inp-container">
+            <form action="{%url 'get_summary'%}" method="POST">
+            {%csrf_token%}
+            <input type="text" id="inp-url" placeholder="Enter video URL" name="video_url">
+            <!-- <button onclick="getSummary()" class="summary-btn">Get Summary</button> -->
+            <input type="submit" value="Get Summary" class="summary-btn">
+                </form>
+        </div>
+    
+    
+</body>
+<script>
+    function logout(){
+        window.location.href = "{%url 'logout'%}";
+    }
+
+    async function getSummary(){
+        const videoUrl = document.getElementById('inp-url').value;
+        try {
+            const baseurl='http://127.0.0.1:8000'
+            const url = "{%url 'get_summary'%}";
+            console.log(videoUrl, baseurl+url)
+            const response = await fetch(baseurl+url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{csrf_token}}'
+                },
+                
+                params:{
+                        video_url: videoUrl
+                    }
+                
+            });
+
+            const data = await response.json();
+
+            console.log(data)
+
+        } catch (error) {
+            
+        }
+    }
+
+</script>
+</html>

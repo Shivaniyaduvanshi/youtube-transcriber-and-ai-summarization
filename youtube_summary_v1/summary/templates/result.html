@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <!-- Google Fonts Link For Icons -->
+    {%load static%}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <script src="{% static 'script.js'%}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-flags.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-payments.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler-vendors.min.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <span class="hamburger-btn material-symbols-rounded">menu</span>
+            <a href="#" class="logo">
+                <img src="{% static 'images/logo.jpg'%}" alt="logo">
+                <h2>Youtube Summary</h2>
+            </a>
+            <ul class="links">
+                <span class="close-btn material-symbols-rounded">close</span>
+                <li><a href="{%url 'home'%}">Home</a></li>
+                <li><a href="{%url 'about'%}">About us</a></li>
+              
+            </ul>
+            <button onclick="logout()" class="login-btn">Log-out</button>
+        </nav>
+    </header>
+
+    
+        <div class="video-inp-container">
+            <form method="post">
+                <textarea id="tinymce-default" >{{summary}}</textarea>
+                <textarea id="tinymce-default-1" >{{ai_summary}}</textarea>
+              </form>
+              
+              
+        </div>
+
+    
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/tinymce/tinymce.min.js" defer></script>
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  let options = {
+                    selector: '#tinymce-default',
+                    height: 300,
+                    menubar: false,
+                    statusbar: false,
+                    readonly: 1,
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                      'noneditable'
+                    ],
+                    toolbar: 'undo redo | formatselect | ' +
+                      'bold italic backcolor | alignleft aligncenter ' +
+                      'alignright alignjustify | bullist numlist outdent indent | ' +
+                      'removeformat',
+                    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+                  }
+                  if (localStorage.getItem("tablerTheme") === 'dark') {
+                    options.skin = 'oxide-dark';
+                    options.content_css = 'dark';
+                  }
+                  tinyMCE.init(options);
+                })
+                document.addEventListener("DOMContentLoaded", function() {
+                  let options = {
+                    selector: '#tinymce-default-1',
+                    height: 300,
+                    menubar: false,
+                    statusbar: false,
+                    readonly: 1,
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                      'noneditable'
+                    ],
+                    toolbar: 'undo redo | formatselect | ' +
+                      'bold italic backcolor | alignleft aligncenter ' +
+                      'alignright alignjustify | bullist numlist outdent indent | ' +
+                      'removeformat',
+                    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+                  }
+                  if (localStorage.getItem("tablerTheme") === 'dark') {
+                    options.skin = 'oxide-dark';
+                    options.content_css = 'dark';
+                  }
+                  tinyMCE.init(options);
+                })
+              </script>
+              
+<script>
+    
+    function logout(){
+        window.location.href = "{%url 'logout'%}";
+    }
+
+    // async function getSummary(){
+    //     const videoUrl = document.getElementById('inp-url').value;
+    //     try {
+    //         const baseurl='http://127.0.0.1:8000'
+    //         const url = "{%url 'get_summary'%}";
+    //         console.log(videoUrl, baseurl+url)
+    //         const response = await fetch(baseurl+url, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'X-CSRFToken': '{{csrf_token}}'
+    //             },
+                
+    //             params:{
+    //                     video_url: videoUrl
+    //                 }
+                
+    //         });
+
+    //         const data = await response.json();
+
+    //         console.log(data)
+
+    //     } catch (error) {
+            
+    //     }
+    // }
+
+</script>
+</html>
